@@ -1,0 +1,25 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text } from '@storybook/addon-knobs';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
+
+import { Center } from '../../../.storybook/decorators'
+import {{pascalCase name}} from './{{pascalCase name}}';
+import { store as initialStoreValue } from '../../../test/';
+
+const mockStore = configureStore();
+const store = mockStore(initialStoreValue);
+
+storiesOf('{{pascalCase name}}', module)
+  .addDecorator(withKnobs)
+  .addDecorator(Center)
+  .add('basic', () => (
+      <Provider store={store}>
+      <BrowserRouter>
+        <{{pascalCase name}} greeting={text('text', 'Hello World!')} />
+      </BrowserRouter>
+    </Provider>
+  ));

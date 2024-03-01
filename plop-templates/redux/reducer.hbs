@@ -1,0 +1,40 @@
+import { actions } from '../actions/{{camelCase name}}';
+
+const {
+  {{constantCase baseActionName}}_PENDING,
+  {{constantCase baseActionName}}_SUCCESS,
+  {{constantCase baseActionName}}_FAILED,
+  {{constantCase baseActionName}}_RESET,
+} = actions;
+
+export const initialState = {
+  data: {},
+  ready: false,
+  loading: false,
+  error: null,
+};
+
+export default function (state = initialState, action = {}) {
+  const ready = action.ready || false;
+
+  switch (action.type) {
+    case {{constantCase baseActionName}}_PENDING:
+      return Object.assign({}, state, { loading: true, ready });
+    case {{constantCase baseActionName}}_SUCCESS:
+      return Object.assign({}, state, {
+        data: action.payload.data,
+        loading: false,
+        ready,
+      });
+    case {{constantCase baseActionName}}_FAILED:
+      return Object.assign({}, state, {
+        error: action.error,
+        loading: false,
+        ready,
+      });
+    case {{constantCase baseActionName}}_RESET:
+      return initialState;
+    default:
+      return state;
+  }
+}

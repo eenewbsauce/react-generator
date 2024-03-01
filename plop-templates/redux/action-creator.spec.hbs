@@ -1,0 +1,60 @@
+import _ from 'lodash';
+import setupIntegrationTest from 'redux-integration-store';
+import axios from 'axios';
+
+import { superThunk } from '../../../store/middleware';
+import reducer from '../reducers/{{camelCase name}}';
+import {
+  actions,
+  {{camelCase baseActionName}}
+} from './{{camelCase name}}';
+
+const {
+  {{constantCase baseActionName}}_PENDING,
+  {{constantCase baseActionName}}_SUCCESS,
+  {{constantCase baseActionName}}_FAILED,
+} = actions;
+
+jest.mock('axios');
+
+describe('{{name}} Actions ::', () => {
+  describe('Integration', () => {
+    let store;
+    let dispatchSpy;
+
+    beforeEach(() => {
+      ({ store, dispatchSpy } = setupIntegrationTest(
+        reducer,
+        '{{storeProperty}}',
+        [superThunk],
+      ));
+    });
+
+    test("Should return action's payload when action type is {{constantCase baseActionName}}: resolve", async () => {
+      const mockReturn = { data: [] };
+      axios.get.mockImplementation(() => Promise.resolve({
+        data: mockReturn,
+      }));
+
+      await store.dispatch({{camelCase baseActionName}}(123));
+      const dispatchCalls = _.takeRight(dispatchSpy.getCalls(), 2);
+      expect(dispatchCalls[0].args[0].type).toBe({{constantCase baseActionName}}_PENDING);
+      expect(dispatchCalls[1].args[0].type).toBe({{constantCase baseActionName}}_SUCCESS);
+      expect(store.getState().{{storeProperty}}.data).toEqual(mockReturn.data);
+    });
+
+    test("Should return action's payload when action type is {{constantCase baseActionName}}: reject", async () => {
+      const error = new Error('ut oh');
+      axios.get.mockImplementation(() => Promise.reject({
+        error,
+      }));
+
+      await store.dispatch({{camelCase baseActionName}}(123)).catch(err => {
+        const dispatchCalls = _.takeRight(dispatchSpy.getCalls(), 2);
+        expect(dispatchCalls[0].args[0].type).toBe({{constantCase baseActionName}}_PENDING);
+        expect(dispatchCalls[1].args[0].type).toBe({{constantCase baseActionName}}_FAILED);
+        expect(store.getState().{{storeProperty}}.error).toEqual({ error });
+      })
+    });
+  });
+});

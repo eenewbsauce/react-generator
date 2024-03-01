@@ -1,0 +1,42 @@
+import React from 'react';
+import { cleanup, render, fireEvent } from 'react-testing-library';
+import 'jest-dom/extend-expect';
+
+import { {{camelCase name}} } from './{{camelCase name}}';
+import { consoleMock } from '../../../../../../server/testing';
+
+describe('hooks :: {{camelCase name}} ::', () => {
+  let restoreConsole;
+  const TestComponent = ({ cb }) => {
+    const ref = {{camelCase name}}(cb);
+
+    return (
+      <div data-testid="test-component" ref={ref} />
+    );
+  };
+
+  afterEach(() => {
+    cleanup();
+    restoreConsole();
+  });
+
+  beforeEach(() => {
+    restoreConsole = consoleMock.muteConsole();
+  });
+
+  test('Should fire when mouse is clicked', async () => {
+    const cb = jest.fn();
+
+    const { getByTestId } = render(<TestComponent cb={cb} />);
+
+    await fireEvent(
+        getByTestId('test-component'), 
+        new MouseEvent('mousedown', {
+            bubbles: true,
+            cancelable: true,
+        }),
+    );
+
+    expect(cb).toHaveBeenCalledTimes(1);
+  });
+});

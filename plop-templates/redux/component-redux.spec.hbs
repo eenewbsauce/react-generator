@@ -1,0 +1,45 @@
+import React from 'react';
+import { cleanup, render, fireEvent } from 'react-testing-library';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import axios from 'axios';
+import 'jest-dom/extend-expect';
+import thunk from 'redux-thunk';
+import configureStore from 'redux-mock-store';
+
+import { store as initialStoreValue } from '../../../test';
+import {{pascalCase name}} from './{{pascalCase name}}';
+import { consoleMock } from '../../../../testing';
+
+const mockStore = configureStore([thunk]);
+let store;
+jest.mock('axios');
+
+describe('<{{pascalCase name}} /> ::', () => {
+  let restoreConsole;
+
+  afterEach(() => {
+    cleanup();
+    restoreConsole();
+  });
+
+  beforeEach(() => {
+    restoreConsole = consoleMock.muteConsole();
+    store = mockStore(initialStoreValue);
+  });
+
+  test('Should mount ', async () => {
+    axios.get.mockImplementationOnce(() => Promise.resolve({ data: {} }));
+
+    const { getByTestId } = render(
+      <Provider store={store}>
+        <BrowserRouter>
+          <{{pascalCase name}} />
+        </BrowserRouter>
+      </Provider>
+    );
+
+    expect(getByTestId('foo')).toBeVisible();
+  });
+});
+

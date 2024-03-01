@@ -1,0 +1,15 @@
+import axios from 'axios';
+
+const baseType = '{{constantCase baseActionName}}';
+
+export const actions = {
+  {{constantCase baseActionName}}_PENDING: `${baseType}_PENDING`,
+  {{constantCase baseActionName}}_SUCCESS: `${baseType}_SUCCESS`,
+  {{constantCase baseActionName}}_FAILED: `${baseType}_FAILED`,
+  {{constantCase baseActionName}}_RESET: `${baseType}_RESET`,
+};
+
+export const {{camelCase baseActionName}} = () => ({
+  type: baseType,
+  promise: axios.get(`/api/replace-me`),
+});

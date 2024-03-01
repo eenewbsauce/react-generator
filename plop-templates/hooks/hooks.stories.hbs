@@ -1,0 +1,21 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { withKnobs } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { Center } from '../../../../.storybook/decorators';
+import { {{camelCase name}} } from './{{camelCase name}}';
+
+const TestComponent = ({ cb }) => {
+    const ref = {{camelCase name}}(cb);
+
+    return (
+        <div data-testid="test-component">
+            <p ref={ref}>I'm hooked up (click me)</p>
+        </div>
+    );
+};
+
+storiesOf('hooks/{{pascalCase name}}', module)
+  .addDecorator(withKnobs)
+  .addDecorator(Center)
+  .add('base', () => <TestComponent cb={action('cb')} />);

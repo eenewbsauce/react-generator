@@ -1,0 +1,30 @@
+import React from "react";
+import { cleanup, render, fireEvent } from "react-testing-library";
+import "jest-dom/extend-expect";
+
+import {{pascalCase name}}, { dataTestId } from "./{{pascalCase name}}";
+import { consoleMock } from "../../../../testing";
+
+describe("<{{pascalCase name}} /> ::", () => {
+  let restoreConsole;
+
+  afterEach(() => {
+    cleanup();
+    restoreConsole();
+  });
+
+  beforeEach(() => {
+    restoreConsole = consoleMock.muteConsole();
+  });
+
+  test("Should apply className prop", async () => {
+    const className = 'foo';
+    const { getByTestId } = render(<{{pascalCase name}} className={className} />);
+
+{{#if addStyleSheet}}
+    expect(getByTestId(dataTestId)).toHaveAttribute('class', `{{kebabCase name}} ${className}`)
+{{else}}
+    expect(getByTestId(dataTestId)).toHaveAttribute('class', className)
+{{/if}}
+  });
+});

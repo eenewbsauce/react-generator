@@ -1,0 +1,49 @@
+import reducer, { initialState } from './{{camelCase name}}';
+import { actions } from '../actions/{{camelCase name}}';
+
+const {
+  {{constantCase baseActionName}}_FAILED,
+  {{constantCase baseActionName}}_PENDING,
+  {{constantCase baseActionName}}_SUCCESS,
+  {{constantCase baseActionName}}_RESET,
+} = actions;
+
+describe('{{camelCase name}}Reducer ::', () => {
+  test('Should return default state', () => {
+    const state = reducer();
+    expect(state).toEqual(initialState);
+  });
+
+  test('Should return reset state', () => {
+    const state = reducer(undefined, {
+      type: {{constantCase baseActionName}}_RESET,
+    });
+    expect(state).toEqual(initialState);
+  });
+
+  test('Should return pending state', () => {
+    const state = reducer(undefined, {
+      type: {{constantCase baseActionName}}_PENDING,
+    });
+    expect(state).toEqual(Object.assign({}, initialState, { loading: true }));
+  });
+
+  test('Should return failed state', () => {
+    const error = new Error('ut oh');
+    const state = reducer(undefined, {
+      ready: true,
+      type: {{constantCase baseActionName}}_FAILED,
+      error,
+    });
+    expect(state).toEqual(Object.assign({}, initialState, { error, ready: true }));
+  });
+
+  test('Should return success state', () => {
+    const state = reducer(undefined, {
+      ready: true,
+      type: {{constantCase baseActionName}}_SUCCESS,
+      payload: { data: {} },
+    });
+    expect(state).toEqual(Object.assign({}, initialState, { data: {}, ready: true }));
+  });
+});

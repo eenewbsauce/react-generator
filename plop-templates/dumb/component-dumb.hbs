@@ -1,0 +1,29 @@
+import classNames from 'classnames';
+import React from 'react';
+import PropTypes from 'prop-types';
+
+{{#if addStyleSheet}}
+import './{{kebabCase name}}.scss'
+{{/if}}
+
+export const dataTestId = "{{kebabCase name}}-component";
+
+const {{pascalCase name}} = ({ className }) => {
+{{#if addStyleSheet}}
+  const classes = classNames('{{kebabCase name}}', className);
+{{else}}
+  const classes = classNames(className);
+{{/if}}
+
+  return <div className={classes} data-testid={dataTestId}>Hello World</div>;
+};
+
+{{pascalCase name}}.defaultProps = {
+  className: '',
+};
+
+{{pascalCase name}}.propTypes = {
+  className: PropTypes.string,
+};
+
+export default React.memo({{pascalCase name}});

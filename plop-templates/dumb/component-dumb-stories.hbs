@@ -1,0 +1,12 @@
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text } from '@storybook/addon-knobs';
+
+import { Center } from '../../../.storybook/decorators'
+import {{pascalCase name}} from './{{pascalCase name}}';
+
+storiesOf('{{pascalCase name}}', module)
+  .addDecorator(withKnobs)
+  .addDecorator(Center)
+  .add('with className', () => <{{pascalCase name}} className={text('className', 'foo')} />)

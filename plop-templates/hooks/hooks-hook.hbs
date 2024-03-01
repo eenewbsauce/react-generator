@@ -1,0 +1,21 @@
+import React, { useEffect, useRef } from 'react';
+
+export const {{camelCase name}} = (cb) => {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const isolatedCb = e => {
+      if (e.target === ref.current) {
+        cb();
+      }
+    };
+
+    document.addEventListener('mousedown', isolatedCb);
+
+    return () => {
+      document.removeEventListener('mousedown', isolatedCb);
+    };
+  }, [cb]);
+
+  return ref;
+};
